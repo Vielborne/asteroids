@@ -17,6 +17,7 @@ def main():
     clock = pygame.time.Clock()
     dt = 0  # Delta time between frames, in seconds
 
+    # Create the player ship at the center of the screen
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
     player = Player(x, y)
@@ -30,8 +31,9 @@ def main():
             if event.type == pygame.QUIT:
                 return
 
-        # Clear the screen, draw the current frame, and show it
+        # Clear the screen, update and draw the player, then show the new frame
         screen.fill("black")
+        player.update(dt)
         player.draw(screen)
         pygame.display.flip()
 
