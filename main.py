@@ -2,6 +2,7 @@ import pygame
 
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from logger import log_state
+from player import Player
 
 
 def main():
@@ -16,6 +17,10 @@ def main():
     clock = pygame.time.Clock()
     dt = 0  # Delta time between frames, in seconds
 
+    x = SCREEN_WIDTH / 2
+    y = SCREEN_HEIGHT / 2
+    player = Player(x, y)
+
     # Main game loop - runs until user quits
     while True:
         log_state()  # Log current game state (for debugging / monitoring)
@@ -27,6 +32,7 @@ def main():
 
         # Clear the screen, draw the current frame, and show it
         screen.fill("black")
+        player.draw(screen)
         pygame.display.flip()
 
         # Limit game to 60 FPS and compute frame time
