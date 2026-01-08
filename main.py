@@ -17,6 +17,10 @@ def main():
     clock = pygame.time.Clock()
     dt = 0  # Delta time between frames, in seconds
 
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+    Player.containers = (updatable, drawable)
+
     # Create the player ship at the center of the screen
     x = SCREEN_WIDTH / 2
     y = SCREEN_HEIGHT / 2
@@ -33,8 +37,9 @@ def main():
 
         # Clear the screen, update and draw the player, then show the new frame
         screen.fill("black")
-        player.update(dt)
-        player.draw(screen)
+        updatable.update(dt)
+        for one in drawable:
+            one.draw(screen)
         pygame.display.flip()
 
         # Limit game to 60 FPS and compute frame time
