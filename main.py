@@ -3,6 +3,8 @@ import pygame
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from logger import log_state
 from player import Player
+from asteroid import Asteroid
+from asteroidfield import AsteroidField
 
 
 def main():
@@ -17,9 +19,20 @@ def main():
     clock = pygame.time.Clock()
     dt = 0  # Delta time between frames, in seconds
 
+    # Create sprite groups for game object management
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
+    asteroids = pygame.sprite.Group()
+
+    # Add Player instances to updatable and drawable groups
     Player.containers = (updatable, drawable)
+    # Add Asteroid instances to asteroids, updatable, and drawable groups
+    Asteroid.containers = (asteroids, updatable, drawable)
+    # Add AsteroidField instances to updatable group only
+    AsteroidField.containers = (updatable)
+
+    # Create the asteroid field spawner
+    asteroid_field = AsteroidField()
 
     # Create the player ship at the center of the screen
     x = SCREEN_WIDTH / 2
