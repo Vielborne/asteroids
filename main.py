@@ -7,6 +7,7 @@ from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from circleshape import CircleShape
+from shot import Shot
 
 
 def main():
@@ -25,13 +26,16 @@ def main():
     updatable = pygame.sprite.Group()
     drawable = pygame.sprite.Group()
     asteroids = pygame.sprite.Group()
+    shots = pygame.sprite.Group()
 
     # Add Player instances to updatable and drawable groups
     Player.containers = (updatable, drawable)
     # Add Asteroid instances to asteroids, updatable, and drawable groups
     Asteroid.containers = (asteroids, updatable, drawable)
     # Add AsteroidField instances to updatable group only
-    AsteroidField.containers = (updatable)
+    AsteroidField.containers = updatable
+    # Add Shot instances to shots, updatable, and drawable groups
+    Shot.containers = (shots, updatable, drawable)
 
     # Create the asteroid field spawner
     asteroid_field = AsteroidField()
