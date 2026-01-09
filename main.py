@@ -1,12 +1,13 @@
 import sys
+
 import pygame
 
-from constants import SCREEN_HEIGHT, SCREEN_WIDTH
-from logger import log_state, log_event
-from player import Player
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 from circleshape import CircleShape
+from constants import SCREEN_HEIGHT, SCREEN_WIDTH
+from logger import log_event, log_state
+from player import Player
 from shot import Shot
 
 
@@ -57,11 +58,18 @@ def main():
         # Clear the screen, update game objects, check collisions, draw everything, then show the new frame
         screen.fill("black")
         updatable.update(dt)
-        for one in asteroids:
-            if CircleShape.collides_with(player, one):
+        # Handle collisions between the player, asteroids, and shots
+        for one_asteroid in asteroids:
+            if CircleShape.collides_with(player, one_asteroid):
                 log_event("player_hit")
                 print("Game Over!")
                 sys.exit()
+            for one_shot in shots:
+                if CircleShape.collides_with(one_shot, one_asteroid):
+                    log_event("asteroid_shot")
+                    one_shot.kill()
+                    one_asteroid.split()
+        # Draw all visible objects and present the new frame
         for one in drawable:
             one.draw(screen)
         pygame.display.flip()
